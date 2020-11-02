@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>compressor image</title></head><body> <input type="file" id="file" accept="image/*" multiple="multiple"><script src="https://cdn.jsdelivr.net/npm/file-saver/dist/FileSaver.min.js"></script><script src="https://cdn.jsdelivr.net/npm/compressorjs/dist/compressor.min.js"></script><script>
+    var input = document.getElementById('file')
+    input.addEventListener('change', (e) => {
+      var files = e.target.files;
+
+      if (!files.length) {
+        return;
+      }
+      for (var i in files) {
+        new Compressor(files[i], {
+          quality: 0.6,
+          success(result) {
+            saveAs(result, 'compressor_' + result.name);
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
+        // compress(files[i], {
+        //   compress: {
+        //     // width: 750,
+        //     // height: 1334,
+        //     quality: 0.6
+        //   }
+        // }, function (file) {
+        //   console.log(file)
+        // })
+      }
+      input.value = ''
+    });
+  </script></body></html>
